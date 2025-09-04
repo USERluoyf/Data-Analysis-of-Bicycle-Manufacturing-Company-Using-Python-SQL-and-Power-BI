@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-conn = pyodbc.connect('Driver={SQL Server};'
-                      'Server=WINDOWS-MK7DD8I\SERVER1;'
-                      'Database=AdventureWorks2019;'
-                      'Trusted_Connection=yes;')
+conn = pyodbc.connect(
+    r"DRIVER={ODBC Driver 17 for SQL Server};"   
+    r"SERVER=localhost,1433;"                   #注意用原始字符串 r"..."
+    r"DATABASE=AdventureWorks2019;"
+    r"Trusted_Connection=yes;"
+    r"TrustServerCertificate=yes;"               # 本机无证书时避免加密报错；不想加密也可用 Encrypt=no
+)
 
-query = open('SQL Queries/Q2 - Annual leave and bonuses.sql').read()
+query = open('../SQL Queries/Q2 - Annual leave and bonuses.sql').read()
 # print(query)
 df = pd.read_sql_query(query, conn)
 # print(df.head())
